@@ -1,108 +1,113 @@
-#include<iostream>
+#include <iostream>
 using namespace std;
-class Node{
-    public:
-        int data;
-        Node* next;
-        Node(){
-            this->data = 0;
-            this->next = NULL;
-        }
-        Node(int data){
-            this->data = data;
-            this->next = NULL;
-        }
+class node{
+  public:
+  int data;
+  node* next;
+  
+  node(){
+    this->data =0;
+    this->next=NULL;
+  }
+
+  node(int data){
+    this->data =data;
+    this->next =NULL;
+  }
 };
-// Insertion at head case
-void insertAtHead(Node* &head,Node* &tail,int data){
-    // Empty Linked list case
-    if(head == NULL){
-        Node* newNode = new Node(data);
-        head = newNode;
-        tail = newNode;
-        return;
-    }
-    // Step - 1
-    Node* newNode = new Node(data);
-    // Step - 2
-    newNode->next = head;
-    // Step - 3
-    head = newNode;
+void display(node* head){
+  node* temp=head;
+  while(temp!=NULL){
+    cout<<temp->data<<" ";
+    temp=temp->next;
+  }
+
 }
-void insertAtTail(Node* &head,Node* &tail,int data){
-    // Empty linked list case
-    if(head == NULL){
-        Node* newNode = new Node(data);
-        head = newNode;
-        tail = newNode;
-        return;
-    }
-    // Step - 1
-    Node* newNode = new Node(data);
-    // Step - 2
-    tail->next = newNode;
-    // Step - 3
-    tail = newNode;
+void insertathead(node* &head,node* &last,int data){
+  if(head==NULL){
+    node* temp=new node(data);
+    head=temp;
+    last=temp;
+    return;
+   
+  }
+  node *temp=new node(data);
+  temp->next=head;
+  head=temp;
+
 }
-int findLength(Node* &head){
-    int len = 1;
-    Node* temp = head;
-    while(temp->next!=NULL){
-        temp = temp->next;
-        len++;
-    }
-    return len;
+void insertatlast(node* &head,node* &last,int data){
+  if(head==NULL){
+    node* temp=new node(data);
+    head=temp;
+    last=temp;
+    return;
+  }
+  node* temp=new node(data);
+  
+  last->next=temp;
+
+ last=temp;
 }
-void insertAtPosition(int data,int position,Node* &head,Node* &tail){
-    // Empty linked list
-    if(head == NULL){
-        Node* newNode = new Node(data);
-        head = newNode;
-        tail = newNode;
-        return;
-    }
-    if(position == 0){
-        insertAtHead(head,tail,data);
-        return;
-    }
-    int len = findLength(head);
-    cout<<len<<endl;
-    if(len == position){
-        insertAtTail(head,tail,data);
-        return;
-    }
-    // step1 : find the position of prev and curr
-    int i = 1;
-    Node* prev = head;
-    while(i<position){
-        prev = prev->next;
-        i++;
-    }
-    Node* curr = prev->next;
-    // step2 : 
-    Node* newNode = new Node(data);
-    // step3 :
-    newNode -> next = curr;
-    // step4 :
-    prev->next = newNode;
+
+int length(node* &head){
+  node* temp=head;
+  int len=0;
+  while(temp!=NULL){
+    temp=temp->next;
+    len++;
+  }
+  return len;
 }
-void print(Node* &head){
-    Node* temp = head;
-    while(temp != NULL){ // Step - 3 Stop when we reach NULL
-        // Step - 1 Print
-        cout<<temp->data<<" ";
-        // Step - 2 Move temp to next
-        temp = temp->next;
-    }
+void insertatpos(int pos,int data,node* &head,node* &last){
+  if(head==NULL){
+    node* newnode=new node(data);
+    head=newnode;
+    last=newnode;
+    return ;
+  }
+  if(pos==0){
+    insertathead(head,last,data);
+    return;
+  }
+  int len=length(head);
+  if(pos>=len){
+    insertatlast(head,last,data);
+  }
+  else{
+  int i=1;
+  node* prev=head;
+
+  while(i<pos){
+    prev = prev->next;
+    i++;
+  }
+  node* curr=prev->next;
+
+  node* newnode=new node(data);
+ 
+  newnode->next=curr;
+  prev->next=newnode;}
+  
+
 }
-int main(){
-    Node* head = new Node(10);
-    Node* tail = head;
-    insertAtHead(head,tail,20);
-    insertAtHead(head,tail,30);
-    insertAtHead(head,tail,40);
-    insertAtHead(head,tail,50);
-    insertAtPosition(101,5,head,tail);
-    print(head);
-    return 0;
+int main() {
+  node *first=NULL;
+  node* last=NULL;
+  insertathead(first,last,20);
+   insertathead(first,last,30);
+    insertathead(first,last,40);
+     insertathead(first,last,50);
+     insertatlast(first,last,10);
+     insertatlast(first,last,30);
+     insertatlast(first,last,60);
+  display(first);
+  insertatpos(8,12,first,last);
+  cout<<endl;
+  display(first);
+  return 0;
 }
+        
+
+    
+  
